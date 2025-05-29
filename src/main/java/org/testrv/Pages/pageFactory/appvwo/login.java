@@ -5,8 +5,8 @@ import org.openqa.selenium.WebDriver;
 
 public class login {
     WebDriver driver;
-    login(WebDriver driver){
-        this.driver= driver;
+    public login(WebDriver driver){
+        this.driver= this.driver;
     }
 
     //Page Locators

@@ -12,7 +12,15 @@ public class login {
     //Page Locators
     private  By emailid= By.id("login-username");
     private By password= By.id("login-password");
+    private By submitbtn= By.xpath("//span(@data-qa= 'ezazsuguuy')");
 
     //Step 2- Page Actions
 
+    public void validUserName(String username, String pwd){
+        driver.findElement(emailid).sendKeys(username);
+        driver.findElement(password).sendKeys(pwd);
+        driver.findElement(submitbtn).click();
+
+    }
 }
+

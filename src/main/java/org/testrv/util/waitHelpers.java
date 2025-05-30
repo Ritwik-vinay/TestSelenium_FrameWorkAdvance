@@ -2,57 +2,50 @@ package org.testrv.util;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 public class waitHelpers {
-    private WebDriver driver;
-    private WebDriverWait wait;
+    public static void JVMwait(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
-    public waitHelpers(WebDriver driver, int timeoutInSeconds) {
-        this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
     }
 
-    public WebElement waitForElementToBeVisible(By locator) {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    public static void waitImplicitWait(WebDriver driver, int time) {
+        driver.manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
     }
 
-    public WebElement waitForElementToBeClickable(By locator) {
-        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    public static void checkvisibility(WebDriver driver, By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    public boolean waitForElementToBeInvisible(By locator) {
-        return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    public static void checkVisibilityOfAndTextToBePresentInElement(WebDriver driver, WebElement element, String expectedText) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOf(element));
+        wait.until(ExpectedConditions.textToBePresentInElement(element, expectedText));
     }
 
-    public boolean waitForUrlToContain(String partialUrl) {
-        return wait.until(ExpectedConditions.urlContains(partialUrl));
+    public static WebElement checkVisibilityByFluentwait(WebDriver driver, By locator) {
+        FluentWait<WebDriver> wait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofSeconds(3)).ignoring(NoSuchElementException.class);
+        WebElement error_message = wait.until(new Function<WebDriver, WebElement>() {
+            public WebElement apply(WebDriver driver) {
+                return driver.findElement(locator);
+            }
+        });
+        return error_message;
+
+
     }
 
-    public boolean waitForTitleToBe(String expectedTitle) {
-        return wait.until(ExpectedConditions.titleIs(expectedTitle));
-    }
-
-    public boolean waitForElementTextToBe(By locator, String expectedText) {
-        return wait.until(ExpectedConditions.textToBe(locator, expectedText));
-    }
-
-    public Alert waitForAlertToBePresent() {
-        return wait.until(ExpectedConditions.alertIsPresent());
-    }
-
-    public boolean waitForElementToBeSelected(By locator) {
-        return wait.until(ExpectedConditions.elementToBeSelected(locator));
-    }
-
-    public WebElement waitForPresenceOfElement(By locator) {
-        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-    }
-
-    public boolean waitForJavaScriptToLoadCompletely() {
-        return wait.until(driver -> ((JavascriptExecutor) driver)
-                .executeScript("return document.readyState").equals("complete"));
-    }
 }

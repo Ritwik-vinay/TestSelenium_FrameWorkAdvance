@@ -7,9 +7,8 @@ import org.testrv.util.waitHelpers;
 public class LoginPage {
     WebDriver driver;
 
-    public LoginPage(WebDriver driver)
-    {
-        this.driver =driver;
+    public LoginPage(WebDriver driver) {
+        this.driver = driver;
     }
 
     //Page Locators
@@ -25,11 +24,20 @@ public class LoginPage {
         driver.findElement(emailid).sendKeys(username);
         driver.findElement(password).sendKeys(pwd);
         driver.findElement(submitbtn).click();
-        waitHelpers.waitImplicitWait(driver, 3);
+        waitHelpers.checkvisibility(driver, errormsg);
 
         String errormessageText = driver.findElement(errormsg).getText();
 
+
         return errormessageText;
+
+    }
+
+    public void vwoValidLoginTest(String username, String pwd) {
+        driver.get("https://app.vwo.com/");
+        driver.findElement(emailid).sendKeys(username);
+        driver.findElement(password).sendKeys(pwd);
+        driver.findElement(submitbtn).click();
 
     }
 }

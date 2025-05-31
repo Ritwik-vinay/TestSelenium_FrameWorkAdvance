@@ -38,6 +38,7 @@ public class LoginPage {
         driver.findElement(emailid).sendKeys(username);
         driver.findElement(password).sendKeys(pwd);
         driver.findElement(submitbtn).click();
+        waitHelpers.JVMwait(5000);
 
     }
 }

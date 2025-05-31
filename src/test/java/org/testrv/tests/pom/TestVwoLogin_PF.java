@@ -31,16 +31,18 @@ public class TestVwoLogin_PF {
     }
 
     @Test
-    public void negativeTestCase(){
+    public void negativeTestCase() throws InterruptedException {
 
         WebDriver driver = new ChromeDriver();
 
         LoginPage loginPage = new LoginPage(driver);
         loginPage.vwoValidLoginTest("ritwikvinay38@gmail.com","123TestingAutomation");
-        dashboard DB = new dashboard();
+
+        dashboard DB = new dashboard(driver);
         String dashboardText= DB.dashboardpage();
+
         assertThat(dashboardText).isNotBlank().isNotEmpty().isNotBlank();
-        Assert.assertEquals(dashboardText,"Welcome Ritwik Vinay ");
+        Assert.assertEquals(dashboardText,"Welcome Ritwik Vinay \uD83D\uDC4B\uD83C\uDFFB");
         driver.quit();
 
     }

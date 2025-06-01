@@ -1,4 +1,4 @@
-package org.testrv.Pages.pageFactory.appvwo;
+package org.testrv.Pages.pageobjectModel.appvwo.normalPOM;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,7 +8,7 @@ public class dashboard {
     WebDriver driver;
 
     public dashboard(WebDriver driver) {
-        this.driver = this.driver;
+        this.driver = driver;
     }
 
     private By dashboard_txt = By.cssSelector("h2[data-qa='nequvasojo']");
@@ -20,4 +20,5 @@ public class dashboard {
 
 
     }
+
 }

@@ -38,11 +38,7 @@ public class driverManager {
                 chromeOptions.addArguments("--start-maximized");
                 driver= new ChromeDriver(chromeOptions);
                 break;
-            case "firefox":
-                FirefoxOptions firefoxOptions = new FirefoxOptions();
-                firefoxOptions.addArguments("--start-maximized");
-                driver= new FirefoxDriver(firefoxOptions);
-                break;
+
             default:
                 System.out.println("No other Browser Supported");
         }
